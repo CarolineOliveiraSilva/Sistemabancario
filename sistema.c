@@ -24,6 +24,7 @@ int main(){
         case 1 :
             printf("Seu saldo atual é: R$ %.2f\n", saldo);
             break;
+
         case 2 :
             printf("Digite o valor do depósito: R$ ");
             scanf("%f", &valor);
@@ -35,6 +36,7 @@ int main(){
                     printf("Valor invalido!\n");
                 }
                 break;
+
         case 3 :
             printf("Digite o valor do saque: R$ ");
             scanf("%f", &valor);
@@ -46,6 +48,7 @@ int main(){
                     printf("Valor invalido ou saldo insuficiente!\n");
                 }
                 break;
+                
         case 4 :
                 printf("Obrigado por usar nosso sistema!");
             break;
