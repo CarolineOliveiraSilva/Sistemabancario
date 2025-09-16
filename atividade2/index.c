@@ -1,117 +1,68 @@
 #include <stdio.h>
+#include <string.h>
+
+void exibirMenu() {
+    printf("\n=== SISTEMA BANCÁRIO ===\n");
+    printf("1. Consultar Saldo\n");
+    printf("2. Depositar\n");
+    printf("3. Sacar\n");
+    printf("4. Sair\n");
+    printf("Escolha uma opção: ");
+}
 
 int main() {
-    int opcao, quantidade;
-    float total = 0, preco;
-    char continuar;
-
-    printf("============================================\n");
-    printf(" 🍽️  Bem-vindo ao Cardápio Digital do Restaurante!\n");
-    printf(" Aqui você pode escolher pratos, bebidas e sobremesas\n");
-    printf(" e no final terá o valor total do pedido.\n");
-    printf("============================================\n\n");
-
+    int opcao;
+    float saldo = 1000.0;
+    float valor;
+    char senha[20];
+    const char senhaCorreta[] = "1234"; 
+     
     do {
-        printf("\n------ MENU PRINCIPAL ------\n");
-        printf("1 - Pratos Principais\n");
-        printf("2 - Bebidas\n");
-        printf("3 - Sobremesas\n");
-        printf("4 - Finalizar Pedido\n");
-        printf("Escolha uma opcao: ");
-        scanf("%d", &opcao);
+        printf("Digite a senha: ");
+        scanf("%s", senha);
 
+        if (strcmp(senha, senhaCorreta) != 0) {
+            printf("Senha incorreta! Tente novamente.\n");
+        }
+    } while (strcmp(senha, senhaCorreta) != 0);
+
+    printf("Senha correta! Acesso liberado.\n");
+    
+    do {
+        exibirMenu();
+        scanf("%d", &opcao);
+        
         switch (opcao) {
             case 1:
-                printf("\n--- PRATOS PRINCIPAIS ---\n");
-                printf("1 - Lasanha R$ 25.00\n");
-                printf("2 - Pizza R$ 30.00\n");
-                printf("3 - Hambúrguer R$ 20.00\n");
-                printf("Escolha: ");
-                scanf("%d", &opcao);
-
-                if (opcao == 1) preco = 25.00;
-                else if (opcao == 2) preco = 30.00;
-                else if (opcao == 3) preco = 20.00;
-                else {
-                    printf("Opcao invalida!\n");
-                    break;
-                }
-                printf("Digite a quantidade: ");
-                scanf("%d", &quantidade);
-                total += preco * quantidade;
-                printf("Item adicionado ao pedido!\n");
+                printf("Seu saldo atual é: R$ %.2f\n", saldo);
                 break;
-
             case 2:
-                printf("\n--- BEBIDAS ---\n");
-                printf("1 - Suco R$ 8.00\n");
-                printf("2 - Refrigerante R$ 6.00\n");
-                printf("3 - Água R$ 3.00\n");
-                printf("Escolha: ");
-                scanf("%d", &opcao);
-
-                if (opcao == 1) preco = 8.00;
-                else if (opcao == 2) preco = 6.00;
-                else if (opcao == 3) preco = 3.00;
-                else {
-                    printf("Opcao invalida!\n");
-                    break;
+                printf("Digite o valor para depósito: R$ ");
+                scanf("%f", &valor);
+                if (valor > 0) {
+                    saldo += valor;
+                    printf("Depósito realizado! Novo saldo: R$ %.2f\n", saldo);
+                } else {
+                    printf("Valor inválido!\n");
                 }
-                printf("Digite a quantidade: ");
-                scanf("%d", &quantidade);
-                total += preco * quantidade;
-                printf("Item adicionado ao pedido!\n");
                 break;
-
             case 3:
-                printf("\n--- SOBREMESAS ---\n");
-                printf("1 - Pudim R$ 10.00\n");
-                printf("2 - Sorvete R$ 12.00\n");
-                printf("3 - Mousse R$ 9.00\n");
-                printf("Escolha: ");
-                scanf("%d", &opcao);
-
-                if (opcao == 1) preco = 10.00;
-                else if (opcao == 2) preco = 12.00;
-                else if (opcao == 3) preco = 9.00;
-                else {
-                    printf("Opcao invalida!\n");
-                    break;
+                printf("Digite o valor para saque: R$ ");
+                scanf("%f", &valor);
+                if (valor > 0 && valor <= saldo) {
+                    saldo -= valor;
+                    printf("Saque realizado! Novo saldo: R$ %.2f\n", saldo);
+                } else {
+                    printf("Valor inválido ou saldo insuficiente!\n");
                 }
-                printf("Digite a quantidade: ");
-                scanf("%d", &quantidade);
-                total += preco * quantidade;
-                printf("Item adicionado ao pedido!\n");
                 break;
-
             case 4:
-                printf("\nFinalizando pedido...\n");
+                printf("Obrigado por usar nosso sistema!\n");
                 break;
-
             default:
-                printf("Opcao invalida! Tente novamente.\n");
+                printf("Opção inválida! Tente novamente.\n");
         }
-
-        if (opcao != 4) {
-            printf("\nDeseja continuar adicionando itens? (S/N): ");
-            scanf(" %c", &continuar);
-        } else {
-            continuar = 'N';
-        }
-
-    } while (continuar == 'S' || continuar == 's');
-
-    printf("\n============================================\n");
-    printf(" 🧾 Valor total do pedido: R$ %.2f\n", total);
-
-    if (total >= 100) {
-        printf(" 🎉 Parabéns! Você ganhou 10%% de desconto!\n");
-        total = total * 0.9;
-    }
-
-    printf(" 💰 Valor final a pagar: R$ %.2f\n", total);
-    printf("============================================\n");
-    printf(" Obrigado por comprar no nosso restaurante!\n");
-
+    } while (opcao != 4);
+    
     return 0;
 }
